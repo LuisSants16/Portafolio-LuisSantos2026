@@ -1,0 +1,311 @@
+/* ==============================
+   HEADER PRINCIPAL
+============================== */
+
+.main-header {
+  width: 100%;
+  padding: 20px 0;
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+  background: transparent;
+  transition: all 0.4s ease;
+}
+
+.main-header.scrolled {
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+
+.nav-container {
+  width: 90%;
+  max-width: 1200px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* ==============================
+   LOGO
+============================== */
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 22px;
+  font-weight: 600;
+  color: white;
+}
+
+.logo-circle {
+  width: 45px;
+  height: 45px;
+  background: #ff4d5a;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: white;
+}
+
+.logo .dot {
+  color: #00ff99;
+}
+
+/* ==============================
+   MENU
+============================== */
+
+.menu {
+  display: flex;
+  gap: 35px;
+}
+
+.menu a {
+  position: relative;
+  color: #ccc;
+  text-decoration: none;
+  font-size: 15px;
+  padding: 5px 0;
+  transition: all 0.3s ease;
+}
+
+/* Línea animada inferior */
+.menu a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0%;
+  height: 2px;
+  background: #2ecc71;
+  transition: width 0.3s ease;
+}
+
+/* Hover */
+.menu a:hover {
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.menu a:hover::after {
+  width: 100%;
+}
+
+/* ==============================
+   BOTON CV
+============================== */
+
+.btn-cv {
+  background: #2ecc71;
+  padding: 12px 25px;
+  border-radius: 30px;
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.btn-cv:hover {
+  background: #27ae60;
+}
+
+/* ==============================
+   HAMBURGUESA FONT AWESOME
+============================== */
+
+.menu-toggle {
+  display: none;
+  font-size: 24px;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.menu-toggle:hover {
+  color: #2ecc71;
+}
+
+/* ===============================
+   OVERLAY
+================================ */
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+  z-index: 1000;
+}
+
+.overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ===============================
+   SIDEBAR
+================================ */
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -100%;
+  width: 80%;
+  max-width: 320px;
+  height: 100vh;
+  background: #0b0f19;
+  padding: 30px 25px;
+  transition: left 0.4s cubic-bezier(0.77, 0, 0.18, 1);
+  z-index: 1001;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 10px 0 30px rgba(0, 0, 0, 0.6);
+}
+
+.sidebar.active {
+  left: 0;
+}
+
+/* Header del sidebar */
+
+.sidebar-header {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 40px;
+}
+
+.sidebar-header i {
+  font-size: 22px;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.sidebar-header i:hover {
+  color: #2ecc71;
+}
+
+/* Menu sidebar */
+
+.sidebar-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.sidebar-menu a {
+  color: #ccc;
+  text-decoration: none;
+  font-size: 16px;
+  display: flex;
+  justify-content: space-between;
+  transition: 0.3s;
+  opacity: 0;
+  transform: translateX(-10px);
+}
+
+.sidebar.active .sidebar-menu a {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Animación escalonada */
+.sidebar.active .sidebar-menu a:nth-child(1) {
+  transition-delay: 0.1s;
+}
+.sidebar.active .sidebar-menu a:nth-child(2) {
+  transition-delay: 0.2s;
+}
+.sidebar.active .sidebar-menu a:nth-child(3) {
+  transition-delay: 0.3s;
+}
+.sidebar.active .sidebar-menu a:nth-child(4) {
+  transition-delay: 0.4s;
+}
+.sidebar.active .sidebar-menu a:nth-child(5) {
+  transition-delay: 0.5s;
+}
+.sidebar.active .sidebar-menu a:nth-child(6) {
+  transition-delay: 0.6s;
+}
+
+.sidebar-menu a:hover {
+  color: white;
+  padding-left: 5px;
+}
+
+/* ===============================
+   RESPONSIVE
+================================ */
+
+@media (max-width: 900px) {
+  .btn-cv {
+    font-size: 13px;
+    padding: 6px 14px;
+  }
+
+  .btn-cv::after {
+    content: "";
+  }
+
+  .btn-cv {
+    white-space: nowrap;
+  }
+
+  .btn-cv {
+    text-indent: -9999px;
+    position: relative;
+  }
+
+  .btn-cv::before {
+    content: "CV";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    text-indent: 0;
+  }
+
+  .nav-container {
+    position: relative;
+    justify-content: space-between;
+  }
+
+  /* Ocultamos el menu desktop */
+  .menu {
+    display: none;
+  }
+
+  /* Mostramos hamburguesa */
+  .menu-toggle {
+    display: block;
+    order: 1;
+  }
+
+  /* Logo centrado */
+  .logo {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  /* Botón a la derecha */
+  .btn-cv {
+    display: block;
+    order: 3;
+    padding: 8px 15px;
+    font-size: 12px;
+  }
+}
