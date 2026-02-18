@@ -55,3 +55,38 @@ heroSection.addEventListener("mouseleave", () => {
     icon.style.transform = "translate(0, 0)";
   });
 });
+
+const skillCards = document.querySelectorAll(".skill-card");
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting && !entry.target.classList.contains("loaded")) {
+
+      entry.target.classList.add("loaded");
+
+      const percent = parseInt(entry.target.getAttribute("data-percent"));
+      const progress = entry.target.querySelector(".skill-progress");
+      const number = entry.target.querySelector(".skill-number");
+
+      // Animación barra
+      progress.style.width = percent + "%";
+
+      // Animación contador
+      let start = 0;
+      const speed = 20;
+      const increment = percent / 50;
+
+      const counter = setInterval(() => {
+        start += increment;
+        if (start >= percent) {
+          start = percent;
+          clearInterval(counter);
+        }
+        number.textContent = Math.floor(start) + "%";
+      }, speed);
+
+    }
+  });
+}, { threshold: 0.5 });
+
+skillCards.forEach(card => observer.observe(card));
