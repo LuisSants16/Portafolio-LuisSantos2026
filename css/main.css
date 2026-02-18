@@ -250,6 +250,194 @@
 }
 
 /* ===============================
+   SERVICES SECTION
+================================ */
+
+.services {
+  padding: 140px 0;
+  background:
+    radial-gradient(
+      circle at 10% 10%,
+      rgba(46, 204, 113, 0.15),
+      transparent 35%
+    ),
+    radial-gradient(
+      circle at 90% 20%,
+      rgba(46, 204, 113, 0.08),
+      transparent 40%
+    ),
+    radial-gradient(
+      circle at 50% 90%,
+      rgba(46, 204, 113, 0.06),
+      transparent 45%
+    ),
+    linear-gradient(135deg, #0f1115, #141820, #0f2027);
+  color: white;
+}
+
+.services::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.02) 1px,
+    transparent 1px
+  );
+  background-size: 40px 40px;
+  pointer-events: none;
+}
+
+.services-container {
+  width: 90%;
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* BOTONES ARRIBA */
+
+.services-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-bottom: 70px;
+}
+
+.tab {
+  padding: 18px 55px;
+  border-radius: 50px;
+  background: #2c2c2c;
+  color: white;
+  font-weight: 600;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  transition: 0.3s ease;
+  font-size: 16px;
+}
+
+.tab.active {
+  border: 1px solid #2ecc71;
+  color: #2ecc71;
+}
+
+.tab:hover {
+  transform: translateY(-4px);
+}
+
+/* GRID */
+
+.services-wrapper {
+  position: relative;
+}
+
+.services-grid {
+  display: none;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  animation: fadeIn 0.4s ease;
+}
+
+.services-grid.active {
+  display: grid;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.service-card {
+  background: #1a1a1a;
+  padding: 60px 40px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  text-align: center;
+  transition: 0.4s ease;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* clave */
+}
+
+.service-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+}
+
+.services-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.services-header h2 {
+  font-size: 42px;
+  margin-bottom: 15px;
+  background: linear-gradient(90deg, #ffffff, #2ecc71);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.services-header p {
+  color: #aaaaaa;
+  font-size: 16px;
+  max-width: 600px;
+  margin: auto;
+}
+
+
+.service-icon {
+  width: 90px;
+  height: 90px;
+  margin: 0 auto 30px;
+  border-radius: 50%;
+  background: rgba(46, 204, 113, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 35px;
+  color: #2ecc71;
+  transition: 1s all ease;
+}
+
+.service-card:hover .service-icon {
+  color: #2ecc71;
+}
+
+.service-card h3 {
+  font-size: 22px;
+  margin-bottom: 15px;
+}
+
+.service-card p {
+  color: #aaa;
+  line-height: 1.6;
+  font-size: 15px;
+  margin-bottom: 10px;
+}
+
+.service-card a {
+  margin-top: auto; /* empuja hacia abajo */
+  text-decoration: none;
+  color: white;
+  font-weight: 600;
+  transition: 0.5s all ease;
+}
+
+.service-card a:hover {
+  color: #00ffcc;
+}
+
+.service-card a::before {
+  content: "→ ";
+}
+
+/* ===============================
    TABLET
 ================================ */
 
@@ -307,6 +495,40 @@
 
   .skills-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .services {
+    padding: 100px 0;
+  }
+
+  .services-tabs {
+    gap: 15px;
+    flex-wrap: wrap;
+  }
+
+  .tab {
+    padding: 14px 35px;
+    font-size: 14px;
+  }
+
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+  }
+
+  .service-card {
+    padding: 50px 30px;
+  }
+
+.service-card:hover {
+  transform: translateY(0px);
+  box-shadow: none;
+}
+
+  .service-icon {
+    width: 75px;
+    height: 75px;
+    font-size: 28px;
   }
 }
 
@@ -382,6 +604,52 @@
 
   .skill-bar {
     margin-top: 15px;
+  }
+
+  .services {
+    padding: 80px 0;
+  }
+
+  .services-tabs {
+    flex-direction: row;
+    justify-content: center;
+    gap: 10px;
+    overflow-x: auto;
+    padding-bottom: 0px;
+    margin-bottom: 35px;
+  }
+
+  .services-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tab {
+    padding: 10px 18px;
+    font-size: 13px;
+    white-space: nowrap;
+  }
+
+  .services-grid {
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+
+  .service-card {
+    padding: 45px 25px;
+  }
+
+  .service-icon {
+    width: 70px;
+    height: 70px;
+    font-size: 26px;
+  }
+
+  .service-card h3 {
+    font-size: 20px;
+  }
+
+  .service-card p {
+    font-size: 14px;
   }
 }
 

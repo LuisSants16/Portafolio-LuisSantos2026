@@ -90,3 +90,26 @@ const observer = new IntersectionObserver(entries => {
 }, { threshold: 0.5 });
 
 skillCards.forEach(card => observer.observe(card));
+
+const tabs = document.querySelectorAll(".tab");
+const groups = document.querySelectorAll(".services-grid");
+
+tabs.forEach(tab => {
+  tab.addEventListener("click", () => {
+
+    // Quitar active de todos los botones
+    tabs.forEach(btn => btn.classList.remove("active"));
+
+    // Agregar active al clickeado
+    tab.classList.add("active");
+
+    // Ocultar todos los grupos
+    groups.forEach(group => group.classList.remove("active"));
+
+    // Mostrar grupo correcto
+    const target = tab.getAttribute("data-group");
+    document.getElementById(target).classList.add("active");
+
+  });
+});
+
