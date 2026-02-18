@@ -510,7 +510,7 @@
     font-size: 14px;
   }
 
-  .tab:hover{
+  .tab:hover {
     transform: translateY(0px);
   }
 
@@ -613,6 +613,14 @@
     padding: 80px 0;
   }
 
+  .services-header h2 {
+    font-size: 28px;
+  }
+
+  .services-header p{
+    font-size: 12px;
+  }
+  
   .services-tabs {
     flex-direction: row;
     justify-content: center;
