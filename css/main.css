@@ -217,3 +217,124 @@
   border-radius: 10px;
   transition: width 1.5s cubic-bezier(0.77, 0, 0.18, 1);
 }
+
+/* ===============================
+   RESPONSIVE SKILLS
+================================ */
+
+@media (max-width: 1024px) {
+
+  .skills-container {
+    gap: 40px;
+  }
+
+  .about-card {
+    width: 360px;
+    height: 460px;
+  }
+
+  .skills-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ===============================
+   TABLET
+================================ */
+
+@media (max-width: 900px) {
+
+  .skills-container {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .about-title {
+    font-size: 36px;
+  }
+
+  .about-description {
+    margin: 0 auto 30px auto;
+  }
+
+  .about-card {
+    width: 340px;
+    height: 440px;
+  }
+
+  .skills-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+}
+
+/* ===============================
+   MOBILE
+================================ */
+
+@media (max-width: 600px) {
+
+  .skills {
+    padding: 80px 0;
+  }
+
+  .skills-container {
+    flex-direction: column;
+    gap: 60px;
+  }
+
+  .about-card {
+    width: 280px;
+    height: 380px;
+  }
+
+  /* Reducimos iconos */
+  .about-icon {
+    width: 50px;
+    height: 50px;
+    font-size: 22px;
+  }
+
+  .css-icon,
+  .git-icon,
+  .github-icon,
+  .code-icon {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+
+  /* Reposicionamos mejor */
+  .css-icon { top: -15px; left: -15px; }
+  .git-icon { top: -15px; right: -15px; }
+  .github-icon { bottom: -15px; left: -15px; }
+  .code-icon { bottom: -15px; right: -15px; }
+
+  .skills-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .skill-card {
+    padding: 25px 15px;
+  }
+
+  .skill-card h3 {
+    font-size: 22px;
+  }
+
+  .skill-card span {
+    font-size: 14px;
+  }
+
+  .skill-bar {
+    margin-top: 15px;
+  }
+}
+
+@media (max-width: 400px) {
+  .skills-grid {
+    grid-template-columns: 1fr;
+  }
+}
