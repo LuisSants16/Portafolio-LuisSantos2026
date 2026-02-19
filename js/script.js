@@ -28,6 +28,41 @@ function closeSidebar() {
   document.body.style.overflow = "auto";
 }
 
+window.addEventListener("scroll", () => {
+
+  // Tu efecto de header
+  if (window.scrollY > 50) {
+    header.classList.add("scrolled");
+  } else {
+    header.classList.remove("scrolled");
+  }
+
+  // 👇 Cerrar sidebar si está abierto
+  if (sidebar.classList.contains("active")) {
+    closeSidebar();
+  }
+
+});
+
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener("click", function (e) {
+    e.preventDefault();
+
+    const targetId = this.getAttribute("href");
+    const target = document.querySelector(targetId);
+
+    if (target) {
+      target.scrollIntoView({
+        behavior: "smooth"
+      });
+
+      // 👇 Limpia el hash de la URL
+      history.replaceState(null, null, " ");
+    }
+  });
+});
+
+
 const heroSection = document.querySelector(".hero");
 
 heroSection.addEventListener("mousemove", (e) => {
