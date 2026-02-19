@@ -113,3 +113,73 @@ tabs.forEach(tab => {
   });
 });
 
+const grid = document.querySelector(".recent-grid");
+const btnPrev = document.querySelector(".recent-arrows button:first-child");
+const btnNext = document.querySelector(".recent-arrows button:last-child");
+
+let currentIndex = 0;
+let cardWidth = 0;
+let totalCards = 0;
+
+function getCardWidth() {
+  const card = grid.querySelector(".recent-card");
+  const styles = getComputedStyle(grid);
+  const gap = parseFloat(styles.gap);
+  return card.offsetWidth + gap;
+}
+
+function setupInfinite() {
+  const cards = Array.from(grid.children);
+  totalCards = cards.length;
+
+  // duplicamos todo el contenido
+  cards.forEach(card => {
+    const clone = card.cloneNode(true);
+    grid.appendChild(clone);
+  });
+
+  cardWidth = getCardWidth();
+}
+
+function updateSlider() {
+  grid.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
+}
+
+function nextSlide() {
+  currentIndex++;
+  updateSlider();
+
+  if (currentIndex >= totalCards) {
+    setTimeout(() => {
+      grid.style.transition = "none";
+      currentIndex = 0;
+      updateSlider();
+      grid.offsetHeight; // fuerza reflow
+      grid.style.transition = "transform 0.4s ease";
+    }, 400);
+  }
+}
+
+function prevSlide() {
+  if (currentIndex === 0) {
+    grid.style.transition = "none";
+    currentIndex = totalCards;
+    updateSlider();
+    grid.offsetHeight;
+    grid.style.transition = "transform 0.4s ease";
+  }
+
+  currentIndex--;
+  updateSlider();
+}
+
+btnNext.addEventListener("click", nextSlide);
+btnPrev.addEventListener("click", prevSlide);
+
+window.addEventListener("resize", () => {
+  cardWidth = getCardWidth();
+  updateSlider();
+});
+
+setupInfinite();
+updateSlider();
