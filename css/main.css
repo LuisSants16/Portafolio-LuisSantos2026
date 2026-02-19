@@ -596,6 +596,191 @@
 }
 
 /* ===============================
+   CLIENTS SECTION
+================================ */
+
+.clients {
+  padding: 140px 0;
+  background:
+    radial-gradient(
+      circle at 20% 50%,
+      rgba(0, 255, 170, 0.08),
+      transparent 40%
+    ),
+    radial-gradient(
+      circle at 80% 20%,
+      rgba(0, 200, 255, 0.08),
+      transparent 40%
+    ),
+    linear-gradient(135deg, #0b1220, #0f1c2e, #0a1624);
+  color: white;
+  overflow: visible;
+}
+
+.clients-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 100px;
+}
+
+/* LEFT SIDE */
+
+.circle-wrapper{
+  position: relative;
+  width: 520px;
+  height: 520px;
+  display: grid;
+  place-items: center;
+}
+
+/* LÍNEAS (NO ROTAN) */
+.rings{
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* dibujamos 2 anillos con box-shadow */
+.rings::before,
+.rings::after{
+  content:"";
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform: translate(-50%,-50%);
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.07);
+}
+
+.rings::before{
+  width: 80%;
+  height: 80%;
+}
+
+.rings::after{
+  width: 100%;
+  height: 100%;
+  border-color: rgba(255,255,255,0.05);
+}
+
+.main-avatar {
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  overflow: hidden;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+}
+
+.main-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ORBIT */
+.orbit {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.8s ease;
+}
+
+/* SMALL AVATARS */
+
+.small-avatar {
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+  top: 50%;
+  left: 50%;
+}
+
+.small-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s ease;
+}
+
+
+
+/* RIGHT SIDE */
+
+.clients-right h2 {
+  font-size: 38px;
+  margin-bottom: 30px;
+}
+
+.clients-text {
+  color: #aaa;
+  line-height: 1.7;
+  margin-bottom: 30px;
+  max-width: 500px;
+}
+
+.fade-out {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.fade-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.clients-text,
+.client-info {
+  transition:
+    opacity 0.4s ease,
+    transform 0.4s ease;
+}
+
+.client-info h4 {
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.client-info span {
+  font-size: 14px;
+  color: #2ecc71;
+}
+
+.clients-arrows {
+  margin-top: 30px;
+  display: flex;
+  gap: 15px;
+}
+
+.clients-arrows button {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  border: 1px solid #2ecc71;
+  background: transparent;
+  color: #2ecc71;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.clients-arrows button:hover {
+  background: #2ecc71;
+  color: black;
+}
+
+/* ===============================
    RESPONSIVE SKILLS
 ================================ */
 
@@ -611,6 +796,35 @@
 
   .skills-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .clients-container {
+    flex-direction: column;
+    text-align: center;
+    gap: 60px;
+  }
+
+  .clients-right h2 {
+    margin-top: 0;
+  }
+
+  .circle-wrapper {
+    width: 450px;
+    height: 450px;
+  }
+
+  .main-avatar {
+    width: 220px;
+    height: 220px;
+  }
+
+  .small-avatar {
+    width: 70px;
+    height: 70px;
+  }
+
+  .clients-right h2 {
+    font-size: 38px;
   }
 }
 
@@ -729,6 +943,30 @@
 
   .recent-card {
     flex: 0 0 calc((100% - 30px) / 2);
+  }
+
+  .clients-container {
+    flex-direction: column;
+    text-align: center;
+    gap: 60px;
+  }
+
+  .clients-right {
+    padding: 0 30px;
+  }
+
+  .clients-arrows {
+    justify-content: center;
+  }
+
+  .circle-wrapper {
+    width: 380px;
+    height: 380px;
+  }
+
+  .main-avatar {
+    width: 200px;
+    height: 200px;
   }
 }
 
@@ -913,6 +1151,47 @@
 
   .recent-arrows {
     margin-top: 40px;
+  }
+
+  .clients {
+    padding: 80px 0;
+  }
+
+  .circle-wrapper {
+    width: 300px;
+    height: 300px;
+  }
+
+  .main-avatar {
+    width: 160px;
+    height: 160px;
+  }
+
+  .small-avatar {
+    width: 55px;
+    height: 55px;
+  }
+
+  .clients-container {
+    padding: 0 15px;
+  }
+
+  .circle-wrapper {
+    margin: 0 auto;
+  }
+
+  .clients-right h2 {
+    font-size: 24px;
+  }
+
+  .clients-text {
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .clients-arrows button {
+    width: 40px;
+    height: 40px;
   }
 }
 

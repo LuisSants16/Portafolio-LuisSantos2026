@@ -8,3 +8,7 @@ body{
     font-family: monospace;
     overflow-x: hidden;
 }
+
+html, body {
+  overflow-x: hidden;
+}
