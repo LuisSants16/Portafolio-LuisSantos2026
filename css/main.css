@@ -870,6 +870,11 @@
     justify-content: space-between;
   }
 
+  .recent-text {
+    flex: 1;
+    min-width: 0; /* 🔥 importante */
+  }
+
   .recent-text h2 {
     font-size: 22px;
   }
@@ -882,6 +887,7 @@
   .recent-icon {
     width: 60px;
     height: 60px;
+    flex-shrink: 0; /* 🔥 evita que se baje */
   }
 
   .recent-icon i {
@@ -901,7 +907,7 @@
     flex: 0 0 100%;
   }
 
-  .recent-card h3{
+  .recent-card h3 {
     font-size: 14px;
   }
 
