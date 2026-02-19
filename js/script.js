@@ -184,7 +184,6 @@ setupInfinite();
 updateSlider();
 
 window.addEventListener("DOMContentLoaded", () => {
-
   const clients = [
     {
       img: "./img/cliente1.jpg",
@@ -215,7 +214,7 @@ window.addEventListener("DOMContentLoaded", () => {
       text: "Excelente experiencia trabajando juntos.",
       name: "Andrés Torres",
       role: "UX Designer",
-    }
+    },
   ];
 
   let clientIndex = 0;
@@ -235,7 +234,6 @@ window.addEventListener("DOMContentLoaded", () => {
 
   // 🔵 Actualizar cliente con animación
   function updateClient() {
-
     const textBlock = document.querySelector(".clients-text");
     const infoBlock = document.querySelector(".client-info");
 
@@ -243,7 +241,6 @@ window.addEventListener("DOMContentLoaded", () => {
     infoBlock.classList.add("fade-out");
 
     setTimeout(() => {
-
       const current = clients[clientIndex];
 
       mainAvatar.src = current.img;
@@ -261,29 +258,39 @@ window.addEventListener("DOMContentLoaded", () => {
         textBlock.classList.remove("fade-in");
         infoBlock.classList.remove("fade-in");
       }, 400);
-
     }, 300);
   }
 
   // 🔵 Distribución circular original
-  const orbitRadius = 200;
-  const angleOffset = Math.PI / 2;
+  function getOrbitRadius() {
+    if (window.innerWidth <= 600) {
+      return 110; // 👈 más compacto en celular
+    }
+    if (window.innerWidth <= 900) {
+      return 150; // 👈 tablet
+    }
+    return 200; // 👈 desktop
+  }
 
-  smallAvatarWrappers.forEach((avatar, index) => {
+  function positionAvatars() {
+    const orbitRadius = getOrbitRadius();
+    const angleOffset = Math.PI / 2;
 
-    const angle = (index / total) * (2 * Math.PI) - angleOffset;
+    smallAvatarWrappers.forEach((avatar, index) => {
+      const angle = (index / total) * (2 * Math.PI) - angleOffset;
 
-    const x = Math.cos(angle) * orbitRadius;
-    const y = Math.sin(angle) * orbitRadius;
+      const x = Math.cos(angle) * orbitRadius;
+      const y = Math.sin(angle) * orbitRadius;
 
-    avatar.style.transform =
-      `translate(-50%, -50%) translate(${x}px, ${y}px)`;
+      avatar.style.transform = `translate(-50%, -50%) translate(${x}px, ${y}px)`;
+    });
+  }
 
-  });
+  positionAvatars();
+  window.addEventListener("resize", positionAvatars);
 
   // 🔵 NEXT
   document.getElementById("clientNext").addEventListener("click", () => {
-
     clientIndex++;
     if (clientIndex >= total) clientIndex = 0;
 
@@ -292,15 +299,13 @@ window.addEventListener("DOMContentLoaded", () => {
     orbitRotation -= step;
     orbit.style.transform = `rotate(${orbitRotation}deg)`;
 
-    smallAvatars.forEach(img => {
+    smallAvatars.forEach((img) => {
       img.style.transform = `rotate(${-orbitRotation}deg)`;
     });
-
   });
 
   // 🔵 PREV
   document.getElementById("clientPrev").addEventListener("click", () => {
-
     clientIndex--;
     if (clientIndex < 0) clientIndex = total - 1;
 
@@ -309,10 +314,8 @@ window.addEventListener("DOMContentLoaded", () => {
     orbitRotation += step;
     orbit.style.transform = `rotate(${orbitRotation}deg)`;
 
-    smallAvatars.forEach(img => {
+    smallAvatars.forEach((img) => {
       img.style.transform = `rotate(${-orbitRotation}deg)`;
     });
-
   });
-
 });
