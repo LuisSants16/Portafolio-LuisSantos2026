@@ -29,7 +29,6 @@ function closeSidebar() {
 }
 
 window.addEventListener("scroll", () => {
-
   // Tu efecto de header
   if (window.scrollY > 50) {
     header.classList.add("scrolled");
@@ -41,10 +40,9 @@ window.addEventListener("scroll", () => {
   if (sidebar.classList.contains("active")) {
     closeSidebar();
   }
-
 });
 
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
   anchor.addEventListener("click", function (e) {
     e.preventDefault();
 
@@ -53,7 +51,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
     if (target) {
       target.scrollIntoView({
-        behavior: "smooth"
+        behavior: "smooth",
       });
 
       // 👇 Limpia el hash de la URL
@@ -61,7 +59,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     }
   });
 });
-
 
 const heroSection = document.querySelector(".hero");
 
@@ -353,4 +350,173 @@ window.addEventListener("DOMContentLoaded", () => {
       img.style.transform = `rotate(${-orbitRotation}deg)`;
     });
   });
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const viewport = document.getElementById("blogViewport");
+  const track = document.getElementById("blogTrack");
+  const prev = document.getElementById("blogPrev");
+  const next = document.getElementById("blogNext");
+  const dotsBox = document.getElementById("blogDots");
+
+  if (!viewport || !track || !prev || !next || !dotsBox) return;
+
+  const GAP = 30;
+
+  // Guardamos los 4 originales
+  const originals = Array.from(track.querySelectorAll(".blog-card"));
+  const count = originals.length;
+  if (count === 0) return;
+
+  // Duplicamos 3 veces: [A][A][A] para infinito estable
+  track.innerHTML = "";
+  for (let k = 0; k < 3; k++) {
+    originals.forEach((card) => track.appendChild(card.cloneNode(true)));
+  }
+
+  // Crea dots (solo 4)
+  dotsBox.innerHTML = "";
+  for (let i = 0; i < count; i++) {
+    const d = document.createElement("div");
+    d.className = "blog-dot" + (i === 0 ? " active" : "");
+    d.addEventListener("click", () => goToIndex(i));
+    dotsBox.appendChild(d);
+  }
+
+  const dots = Array.from(dotsBox.querySelectorAll(".blog-dot"));
+
+  function cardStep() {
+    const card = track.querySelector(".blog-card");
+    if (!card) return 0;
+    return card.getBoundingClientRect().width + GAP;
+  }
+
+  // Ponemos el scroll en el bloque central (la 2da tanda)
+  function setToMiddle(noAnim = true) {
+    const step = cardStep();
+    if (!step) return;
+    if (noAnim) track.style.scrollBehavior = "auto";
+    track.scrollLeft = step * count; // inicio de la tanda central
+    if (noAnim)
+      requestAnimationFrame(() => (track.style.scrollBehavior = "smooth"));
+  }
+
+  function activeDotFromScroll() {
+    const step = cardStep();
+    if (!step) return;
+    const raw = Math.round(track.scrollLeft / step);
+    const real = ((raw % count) + count) % count;
+    dots.forEach((x) => x.classList.remove("active"));
+    dots[real].classList.add("active");
+  }
+
+  function goToIndex(i) {
+    const step = cardStep();
+    if (!step) return;
+    // vamos dentro de la tanda central
+    const target = step * (count + i);
+    track.scrollTo({ left: target, behavior: "smooth" });
+  }
+
+  function nextSlide() {
+    const step = cardStep();
+    if (!step) return;
+    track.scrollBy({ left: step, behavior: "smooth" });
+  }
+
+  function prevSlide() {
+    const step = cardStep();
+    if (!step) return;
+    track.scrollBy({ left: -step, behavior: "smooth" });
+  }
+
+  next.addEventListener("click", () => {
+    nextSlide();
+    restartAuto();
+  });
+  prev.addEventListener("click", () => {
+    prevSlide();
+    restartAuto();
+  });
+
+  // Infinito: si te vas muy a la derecha o izquierda, te “teletransporta” al centro sin que se note
+  function keepInfinite() {
+    const step = cardStep();
+    if (!step) return;
+
+    const totalWidth = step * count;
+    const maxScroll = track.scrollWidth - viewport.offsetWidth;
+
+    // Si llega casi al final → lo manda al bloque central
+    if (track.scrollLeft >= maxScroll - step) {
+      track.style.scrollBehavior = "auto";
+      track.scrollLeft -= totalWidth;
+      requestAnimationFrame(() => {
+        track.style.scrollBehavior = "smooth";
+      });
+    }
+
+    // Si llega casi al inicio → lo manda al centro
+    if (track.scrollLeft <= step) {
+      track.style.scrollBehavior = "auto";
+      track.scrollLeft += totalWidth;
+      requestAnimationFrame(() => {
+        track.style.scrollBehavior = "smooth";
+      });
+    }
+
+    activeDotFromScroll();
+  }
+
+  track.addEventListener("scroll", () => {
+    // pequeño debounce con rAF
+    window.requestAnimationFrame(keepInfinite);
+  });
+
+  // Auto slide
+  let timer = null;
+  function startAuto() {
+    stopAuto();
+    timer = setInterval(nextSlide, 3500);
+  }
+  function stopAuto() {
+    if (timer) clearInterval(timer);
+    timer = null;
+  }
+
+  /* ===============================
+   PAUSA AUTO AL HACER SWIPE
+================================ */
+
+  let resumeTimeout = null;
+
+  // Cuando empieza a tocar
+  track.addEventListener("touchstart", () => {
+    stopAuto();
+    if (resumeTimeout) clearTimeout(resumeTimeout);
+  });
+
+  // Cuando suelta el dedo
+  track.addEventListener("touchend", () => {
+    resumeTimeout = setTimeout(() => {
+      startAuto();
+    }, 5000); // vuelve a activar después de 5 segundos
+  });
+
+  function restartAuto() {
+    startAuto();
+  }
+
+  track.addEventListener("mouseenter", stopAuto);
+  track.addEventListener("mouseleave", startAuto);
+
+  window.addEventListener("resize", () => {
+    setToMiddle(true);
+    activeDotFromScroll();
+  });
+
+  // init
+  setToMiddle(true);
+  activeDotFromScroll();
+  startAuto();
 });
