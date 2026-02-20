@@ -477,7 +477,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let timer = null;
   function startAuto() {
     stopAuto();
-    timer = setInterval(nextSlide, 3500);
+    timer = setInterval(nextSlide, 4000);
   }
   function stopAuto() {
     if (timer) clearInterval(timer);
